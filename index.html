@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritual Community</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background"></div>
+
+   <div class="header-fixed">
+    <img src="https://i.postimg.cc/MHDCjkqV/black.png" alt="Ritual Community" width="200">
+</div>
+
+    <div class="container">
+
+        
+
+
+
+        <!-- === WELCOME SECTION === -->
+        <div class="welcome-section">
+            <h1>WELCOME!</h1>
+            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
+            <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
+            <p>By clicking on any participant, you can view their works directly on the website.</p>
+            <p>By clicking on any metric (for example, Views), you can filter by it.</p>
+            <p>Updated every day.</p>
+            <p>Support us on Twitter!</p>
+
+            <div class="team-box">
+                <p>Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+               
+            </div>
+        </div>
+
+        <!-- Общая статистика -->
+        <div class="stats">
+            <div class="stat-box" id="total-posts">Total Posts: 0</div>
+            <div class="stat-box" id="total-users">Total Users: 0</div>
+            <div class="stat-box" id="total-views">Total Views: 0</div>
+        </div>
+
+        <!-- 🔍 Поиск -->
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search user...">
+        </div>
+
+        <!-- Фильтр по времени -->
+        <div class="time-filter">
+            <label for="time-select">Filter by time:</label>
+            <select id="time-select">
+                <option value="7">Last 7 days</option>
+                <option value="14">Last 14 days</option>
+                <option value="30">Last 30 days</option>
+                <option value="all" selected>All time</option>
+            </select>
+        </div>
+
+        <!-- Таблица лидеров -->
+        <table id="leaderboard">
+            <thead>
+                <tr>
+                    <th id="name-header">User</th>
+                    <th id="posts-header">Posts <span class="sort-arrow">▲</span></th>
+                    <th id="likes-header">Likes <span class="sort-arrow"></span></th>
+                    <th id="retweets-header">Retweets <span class="sort-arrow"></span></th>
+                    <th id="comments-header">Comments <span class="sort-arrow"></span></th>
+                    <th id="views-col-header">Views <span class="sort-arrow"></span></th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-body"></tbody>
+        </table>
+
+        <!-- Пагинация -->
+        <div class="pagination">
+            <button id="prev-page">Previous</button>
+            <span id="page-info"></span>
+            <button id="next-page">Next</button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
+        <!-- Твиты выбранного пользователя -->
+    <div id="tweets-container" style="margin-top: 20px;">
+        
+        <ul id="tweets-list"></ul>
+    </div>
+
+
+    
