@@ -20,7 +20,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y git-lfs
           git lfs install
-          git lfs pull  # Загружает большие файлы, отслеживаемые LFS
+          git lfs pull
 
       - name: Set up Python
         uses: actions/setup-python@v5
