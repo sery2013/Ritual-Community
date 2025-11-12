@@ -2,7 +2,7 @@ name: Update Leaderboard
 
 on:
   schedule:
-    - cron: "30 7 * * *"
+    - cron: "30 7 * * *"  # 1 раз в день в 7:30 UTC
   workflow_dispatch:
 
 jobs:
@@ -15,6 +15,13 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
 
+      - name: Setup Git LFS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install
+          git lfs pull  # Загружает большие файлы, отслеживаемые LFS
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -25,7 +32,7 @@ jobs:
 
       - name: Run update script
         env:
-          API_KEY: ${{ secrets.API_KEY }}  # твой API ключ для SocialData
+          API_KEY: ${{ secrets.API_KEY }}
         run: python update_leaderboard.py
 
       - name: Commit and push changes
