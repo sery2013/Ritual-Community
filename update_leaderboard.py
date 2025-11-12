@@ -15,12 +15,12 @@ TWEETS_FILE = "all_tweets.json"
 LEADERBOARD_FILE = "leaderboard.json"
 
 
-
 def load_json(path):
     try:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
+        logging.info(f"Файл {path} не найден, возвращаем пустой список.")
         return []
 
 
@@ -39,38 +39,50 @@ def fetch_tweets(cursor=None, limit=50):
 
 
 def collect_all_tweets():
-    all_tweets = []
+    # ✅ Загружаем СТАРЫЕ твиты из файла
+    old_tweets = load_json(TWEETS_FILE)
+    # Создаём словарь для быстрого поиска твита по ID
+    old_tweet_map = {t["id_str"]: t for t in old_tweets}
+    all_tweets = []  # Список для нового файла
     seen_ids = set()
-
     cursor = None
-    total_new = 0
+    new_tweets_count = 0
+    updated_tweets_count = 0
     while True:
         data = fetch_tweets(cursor)
         tweets = data.get("tweets", [])
         cursor = data.get("next_cursor")
-
         if not tweets:
             break
-
-        new_tweets = [t for t in tweets if t["id_str"] not in seen_ids]
-        if not new_tweets:
-            break
-
-        all_tweets.extend(new_tweets)
-        seen_ids.update(t["id_str"] for t in new_tweets)
-        total_new += len(new_tweets)
-
-        logging.info(f"✅ Загружено {len(new_tweets)} новых твитов (всего: {len(all_tweets)})")
-
+        for t in tweets:
+            tweet_id = t["id_str"]
+            if tweet_id in seen_ids:
+                continue
+            seen_ids.add(tweet_id)
+            if tweet_id in old_tweet_map:
+                # Твит уже был — обновляем его (например, метрики)
+                old_tweet = old_tweet_map[tweet_id]
+                # Пример обновления метрик (проверьте, какие поля вы хотите обновлять)
+                old_tweet["favorite_count"] = t.get("favorite_count", old_tweet.get("favorite_count", 0))
+                old_tweet["retweet_count"] = t.get("retweet_count", old_tweet.get("retweet_count", 0))
+                old_tweet["reply_count"] = t.get("reply_count", old_tweet.get("reply_count", 0))
+                old_tweet["quote_count"] = t.get("quote_count", old_tweet.get("quote_count", 0))
+                old_tweet["views_count"] = t.get("views_count", old_tweet.get("views_count", 0))
+                # Добавляем обновлённый твит в итоговый список
+                all_tweets.append(old_tweet)
+                updated_tweets_count += 1
+            else:
+                # Новый твит — добавляем как есть
+                all_tweets.append(t)
+                new_tweets_count += 1
+        logging.info(f"✅ Новых: {new_tweets_count}, обновлено: {updated_tweets_count}, всего: {len(all_tweets)}")
         if not cursor:
             break
-
         time.sleep(3)
-
+    # ✅ Сохраняем ВСЕ твиты (старые + новые, с обновлёнными метриками)
     save_json(TWEETS_FILE, all_tweets)
-    logging.info(f"\nСбор завершён. Всего твитов: {len(all_tweets)}")
+    logging.info(f"\nСбор завершён. Всего твитов: {len(all_tweets)} (новых: {new_tweets_count}, обновлено: {updated_tweets_count})")
     return all_tweets
-
 
 
 def build_leaderboard(tweets):
@@ -100,7 +112,6 @@ def build_leaderboard(tweets):
         stats["quotes"] += t.get("quote_count", 0)
         stats["views"] += t.get("views_count", 0)
 
-
     leaderboard_list = [[user, stats] for user, stats in leaderboard.items()]
     save_json(LEADERBOARD_FILE, leaderboard_list)
     logging.info(f"🏆 Лидерборд обновлён ({len(leaderboard_list)} участников).")
@@ -109,4 +120,3 @@ def build_leaderboard(tweets):
 if __name__ == "__main__":
     tweets = collect_all_tweets()
     build_leaderboard(tweets)
-
