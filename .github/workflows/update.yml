@@ -2,7 +2,7 @@ name: Update Leaderboard
 
 on:
   schedule:
-    - cron: "30 7 * * *"  # 1 раз в день в 7:30 UTC
+    - cron: "30 7 */2 * *"
   workflow_dispatch:
 
 jobs:
@@ -15,8 +15,6 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
 
-      # УБРАЛИ Setup Git LFS, так как больше не используем
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -27,13 +25,13 @@ jobs:
 
       - name: Run update script
         env:
-          API_KEY: ${{ secrets.API_KEY }}
+          API_KEY: ${{ secrets.API_KEY }}  # твой API ключ для SocialData
         run: python update_leaderboard.py
 
       - name: Commit and push changes
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add leaderboard.json all_tweets.json
+          git add leaderboard.json all_tweets.json || true
           git commit -m "Auto update leaderboard [skip ci]" || echo "No changes"
           git push
