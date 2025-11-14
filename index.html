@@ -71,4 +71,27 @@
                     <th id="name-header">User</th>
                     <th id="posts-header">Posts <span class="sort-arrow">▲</span></th>
                     <th id="likes-header">Likes <span class="sort-arrow"></span></th>
-                    <th id="retweets-header">Retweets <span class="sort-arrow"></span></
+                    <th id="retweets-header">Retweets <span class="sort-arrow"></span></th>
+                    <th id="comments-header">Comments <span class="sort-arrow"></span></th>
+                    <th id="views-col-header">Views <span class="sort-arrow"></span></th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-body"></tbody>
+        </table>
+
+        <!-- Пагинация -->
+        <div class="pagination">
+            <button id="prev-page">Previous</button>
+            <span id="page-info"></span>
+            <button id="next-page">Next</button>
+        </div>
+    </div>
+
+    <!-- Твиты выбранного пользователя -->
+    <div id="tweets-container" style="margin-top: 20px;">
+        <ul id="tweets-list"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
