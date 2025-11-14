@@ -17,17 +17,18 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === FULL-WIDTH BANNER (Кликабельный, без текста RITUAL) === */
+/* === FULL-WIDTH BANNER (Кликабельный, без текста RITUAL, закреплённый) === */
 .full-width-banner {
   width: 100vw; /* Занимает всю ширину экрана */
   height: 120px; /* Фиксированная высота 120px */
   background: #0d1117;
   box-sizing: border-box;
-  position: relative;
-  left: 50%;
+  position: sticky; /* Закреплённое позиционирование */
+  top: 0; /* Прилипает к верху экрана */
+  /* left: 50%;
   right: 50%;
   margin-left: -50vw;
-  margin-right: -50vw;
+  margin-right: -50vw; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -400,8 +401,8 @@ tr.active-row:hover {
 }
 
 /* Для мобильных устройств */
-@media (max-width: 1350px) {
+/* @media (max-width: 1350px) {
     .full-width-banner {
         max-width: 100%;
     }
-}
+} */
