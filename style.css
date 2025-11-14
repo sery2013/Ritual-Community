@@ -17,17 +17,17 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === STICKY BANNER (Просто и надёжно) === */
-.sticky-banner {
+/* === FULL-WIDTH STICKY BANNER (Просто и надёжно) === */
+.full-width-sticky-banner {
   width: 100vw;
   height: 120px;
   background: #0d1117;
   position: sticky;
   top: 0;
-  z-index: 1000; /* Очень высокий z-index, чтобы быть поверх всего */
+  z-index: 1000; /* Очень высокий z-index */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0 20px;
   box-sizing: border-box;
@@ -43,23 +43,23 @@ body {
   color: inherit;
 }
 
-.logo-only {
-  width: 36px;
+.logo-large {
+  width: 80px; /* Увеличил ширину логотипа */
   height: auto;
 }
 
-.characters {
+.characters-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 20px;
   flex-grow: 1;
   justify-content: flex-end;
 }
 
-.char {
-  width: 52px;
+.character-large {
+  width: 80px; /* Увеличил ширину персонажей */
   height: auto;
-  border-radius: 6px;
+  border-radius: 8px;
   object-fit: contain;
 }
 
@@ -71,313 +71,4 @@ body {
   text-align: center;
 }
 
-/* === WELCOME SECTION === */
-.welcome-section {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #ffffff;
-}
-
-.welcome-section h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 15px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-}
-
-.welcome-section p {
-  font-size: 1.1rem;
-  margin: 8px 0;
-}
-
-.welcome-section a {
-  color: #fff;
-  text-decoration: underline;
-}
-
-/* === TEAM BOX === */
-.team-box {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 15px;
-  background: rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.team-box p {
-  margin: 5px 0;
-  font-weight: 600;
-}
-
-/* === STATS === */
-.stats {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 25px;
-}
-
-.stat-box {
-  flex: 1;
-  padding: 15px;
-  font-size: 1.1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.stat-box:hover {
-  border-color: #ffffff;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
-  transform: scale(1.03);
-}
-
-/* === SEARCH BOX === */
-.search-box {
-  margin-bottom: 25px;
-}
-
-#search {
-  width: 60%;
-  padding: 10px 15px;
-  font-size: 1rem;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-radius: 10px;
-  outline: none;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-#search:focus {
-  border-color: #ffffff;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-  transform: scale(1.02);
-}
-
-/* === TABLE === */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 15px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(5px);
-}
-
-thead th {
-  padding: 12px 15px;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  transition: 0.2s;
-}
-
-thead th:hover {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-}
-
-thead th.active {
-  color: #fff;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-}
-
-.sort-arrow {
-  font-size: 0.8rem;
-  margin-left: 5px;
-  opacity: 0.7;
-}
-
-tbody td {
-  padding: 10px 15px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-tbody tr:hover {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-
-/* === PAGINATION === */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.pagination button {
-  padding: 8px 15px;
-  color: #ffffff;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.pagination button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  transform: scale(1.05);
-}
-
-#page-info {
-  font-weight: 600;
-  color: #ffffff;
-}
-
-
-.time-filter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px auto;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 10px 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-  width: fit-content;
-}
-
-.time-filter label {
-  font-weight: 600;
-  color: #fff;
-  font-size: 16px;
-  letter-spacing: 0.3px;
-}
-
-.time-filter select {
-  background: #1c1c1c;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-  padding: 8px 14px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
-}
-
-.time-filter select:hover {
-  background: #2a2a2a;
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-.time-filter select:focus {
-  background: #2f2f2f;
-  border-color: #4a90e2;
-  box-shadow: 0 0 10px rgba(74, 144, 226, 0.4);
-}
-
-/* === ACCORDION (TWEETS SECTION) === */
-.tweets-row td {
-  background: rgba(13, 17, 23, 0.85);
-  border-top: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 25px;
-  animation: fadeInAccordion 0.4s ease;
-}
-
-@keyframes fadeInAccordion {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Контейнер для карточек твитов */
-.tweet-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-/* Карточка твита */
-.tweet-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 18px;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
-  width: 445px;
-  color: #e7e9ea;
-  padding: 15px 18px;
-  text-align: left;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
-
-.tweet-card:hover {
-  transform: translateY(-5px);
-  border-color: #ffffff;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-}
-
-/* Текст твита */
-.tweet-card p {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.4rem;
-  white-space: pre-line;
-}
-
-/* Изображение внутри твита */
-.tweet-card img {
-  width: 100%;
-  border-radius: 14px;
-  margin-top: 10px;
-  object-fit: cover;
-}
-
-/* Дата */
-.tweet-card .tweet-date {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #ffffff;
-  opacity: 0.8;
-  text-align: right;
-  font-style: italic;
-}
-
-
-/* Короткие твиты (автоматическая адаптация) */
-.tweet-card.short {
-  padding: 10px 14px;
-  font-size: 0.9rem;
-  text-align: center;
-  justify-content: center;
-}
-
-/* === ACTIVE ROW (User opened) === */
-tr.active-row {
-  background: rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-  transition: all 0.3s ease;
-}
-
-tr.active-row:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
-}
+/* === WELCOME SECTION ===
