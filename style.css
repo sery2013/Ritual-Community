@@ -17,21 +17,26 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === FULL-WIDTH BANNER (Один фоновый баннер 1350×120) === */
-.full-width-banner {
-  width: 100vw;
-  height: 120px;
+/* === CENTERED BANNER (1350×100, по центру, кликабельный) === */
+.centered-banner {
+  width: 100%;
+  height: 100px; /* высота 100px */
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: url("https://i.yapx.ru/cIi3H.png") no-repeat left center / auto 100%; /* ВАША ССЫЛКА ЗДЕСЬ */
+  display: flex;
+  justify-content: center; /* центрирует содержимое по горизонтали */
+  align-items: center;     /* центрирует содержимое по вертикали */
+  background: #0d1117; /* фон, если изображение не загрузится */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .banner-link {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 1350px;   /* фиксированная ширина изображения */
+  height: 100px;   /* фиксированная высота */
+  background: url("https://i.yapx.ru/cIi3H.png") no-repeat center center;
+  background-size: 1350px 100px; /* точный размер изображения */
   text-decoration: none;
   color: inherit;
 }
@@ -39,7 +44,7 @@ body {
 /* === CONTAINER === */
 .container {
   max-width: 1000px;
-  margin: 160px auto 60px; /* Отступ под баннер */
+  margin: 160px auto 60px; /* увеличено, чтобы учесть высоту баннера */
   padding: 20px;
   text-align: center;
 }
