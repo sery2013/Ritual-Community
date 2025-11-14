@@ -9,16 +9,32 @@
 <body>
     <div class="background"></div>
 
-   <div class="header-fixed">
-    <img src="https://i.yapx.ru/cIi3H.png" alt="Ritual Community" width="200" onclick="location.reload();">
-</div>
+    <!-- === НОВЫЙ БАННЕР НА ВСЮ ШИРИНУ === -->
+    <div class="full-width-logo-banner">
+        <div class="logo-container">
+            <!-- Логотип и текст -->
+            <div class="logo-text">
+                <img src="https://i.yapx.ru/cIi3H.png" alt="Ritual Logo" class="logo-icon"> <!-- Замените на реальный путь к вашему логотипу -->
+                <span class="logo-name">RITUAL</span>
+            </div>
+            <!-- Ряд персонажей -->
+            <div class="character-row">
+                <img src="https://i.imgur.com/1234567.png" alt="Character 1" class="character">
+                <img src="https://i.imgur.com/2345678.png" alt="Character 2" class="character">
+                <img src="https://i.imgur.com/3456789.png" alt="Character 3" class="character">
+                <!-- ... и так далее для всех персонажей -->
+                <img src="https://i.imgur.com/9876543.png" alt="Character N" class="character">
+            </div>
+        </div>
+    </div>
+
+    <!-- Старый заголовок (теперь используется для логотипа в шапке, если нужно) -->
+    <div class="header-fixed">
+        <!-- img src="https://i.yapx.ru/cIi3H.png" alt="Ritual Community" width="200" onclick="location.reload();" -->
+        <!-- Мы убрали изображение из шапки, так как оно теперь в новом баннере -->
+    </div>
 
     <div class="container">
-
-        
-
-
-
         <!-- === WELCOME SECTION === -->
         <div class="welcome-section">
             <h1>WELCOME!</h1>
@@ -27,11 +43,8 @@
             <p>By clicking on any participant, you can view their works directly on the website.</p>
             <p>By clicking on any metric (for example, views), you can filter by it.</p>
             <p><span style="color: #90EE90;"><b>Updates happen every day. Activity data is loaded gradually.</b></span></p>
-        
-
             <div class="team-box">
                 <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
-               
             </div>
         </div>
 
@@ -81,24 +94,11 @@
         </div>
     </div>
 
+    <!-- Твиты выбранного пользователя -->
+    <div id="tweets-container" style="margin-top: 20px;">
+        <ul id="tweets-list"></ul>
+    </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-        <!-- Твиты выбранного пользователя -->
-    <div id="tweets-container" style="margin-top: 20px;">
-        
-        <ul id="tweets-list"></ul>
-    </div>
-
-
-    
-
-
-
-
-
-
-
-
-
