@@ -17,103 +17,78 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === FULL-WIDTH LOGO BANNER === */
-.full-width-logo-banner {
-    width: 100vw; /* Занимает всю ширину экрана */
-    background: #0d1117; /* Цвет фона, как у вашего сайта */
-    padding: 15px 0; /* Вертикальные отступы */
-    box-sizing: border-box;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Опционально: граница снизу */
-    z-index: 11; /* Повышенный z-index, чтобы был поверх .background */
+/* === RITUAL BANNER (1350×120px, кликабельный) === */
+.ritual-banner-wrapper {
+  width: 100%;
+  max-width: 1350px;
+  height: 120px;
+  margin: 0 auto; /* центрирует баннер по горизонтали */
+  background: #0d1117;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 11;
 }
 
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Отступ между логотипом и персонажами */
-    max-width: 100%;
-    padding: 0 20px; /* Горизонтальные отступы */
-    box-sizing: border-box;
-    width: 100%;
+.ritual-banner-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.ritual-banner-link:hover {
+  opacity: 0.92;
+}
+
+.ritual-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
 }
 
 .logo-text {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .logo-icon {
-    width: 32px; /* Размер логотипа */
-    height: auto;
+  width: 36px;
+  height: auto;
 }
 
 .logo-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-    letter-spacing: 1px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
 }
 
 .character-row {
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Отступ между персонажами */
-    overflow-x: auto; /* Если персонажей много, можно прокручивать */
-    padding: 0 10px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.3) transparent;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 100%;
 }
 
 .character {
-    width: 50px; /* Размер персонажа */
-    height: auto;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
-}
-
-.character:hover {
-    transform: scale(1.1);
-}
-
-/* === HEADER (старая шапка, теперь ниже) === */
-.header-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(13, 17, 23, 0.85);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Изменил тень */
-  /* Изменил padding: верх/низ теперь 40px, боковые остались 40px */
-  padding: 40px 40px;
-  z-index: 10; /* Ниже, чем у нового баннера */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.header-fixed h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #ffffff; /* Изменил на белый */
-  margin: 0;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Изменил тень */
+  width: 52px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: contain;
 }
 
 /* === CONTAINER === */
 .container {
   max-width: 1000px;
-  /* Увеличил отступ сверху, чтобы учесть высоту нового баннера (~80px) + высоту старой шапки (~110px) */
-  margin: 200px auto 60px;
+  margin: 160px auto 60px; /* увеличено с 140px до 160px */
   padding: 20px;
   text-align: center;
 }
@@ -430,17 +405,8 @@ tr.active-row:hover {
 }
 
 /* Для мобильных устройств */
-@media (max-width: 768px) {
-    .full-width-logo-banner {
-        flex-direction: column;
-        padding: 15px 10px;
-    }
-    .logo-container {
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .character {
-        width: 40px;
+@media (max-width: 1350px) {
+    .ritual-banner-wrapper {
+        max-width: 100%;
     }
 }
