@@ -17,7 +17,74 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === HEADER === */
+/* === FULL-WIDTH LOGO BANNER === */
+.full-width-logo-banner {
+    width: 100vw; /* Занимает всю ширину экрана */
+    background: #0d1117; /* Цвет фона, как у вашего сайта */
+    padding: 15px 0; /* Вертикальные отступы */
+    box-sizing: border-box;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Опционально: граница снизу */
+    z-index: 11; /* Повышенный z-index, чтобы был поверх .background */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Отступ между логотипом и персонажами */
+    max-width: 100%;
+    padding: 0 20px; /* Горизонтальные отступы */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: 32px; /* Размер логотипа */
+    height: auto;
+}
+
+.logo-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.character-row {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Отступ между персонажами */
+    overflow-x: auto; /* Если персонажей много, можно прокручивать */
+    padding: 0 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+
+.character {
+    width: 50px; /* Размер персонажа */
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+.character:hover {
+    transform: scale(1.1);
+}
+
+/* === HEADER (старая шапка, теперь ниже) === */
 .header-fixed {
   position: fixed;
   top: 0;
@@ -26,8 +93,9 @@ body {
   background: rgba(13, 17, 23, 0.85);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Изменил тень */
-  padding: 15px 40px; /* <-- padding по бокам останется, если нужно */
-  z-index: 10;
+  /* Изменил padding: верх/низ теперь 40px, боковые остались 40px */
+  padding: 40px 40px;
+  z-index: 10; /* Ниже, чем у нового баннера */
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -44,7 +112,8 @@ body {
 /* === CONTAINER === */
 .container {
   max-width: 1000px;
-  margin: 140px auto 60px;
+  /* Увеличил отступ сверху, чтобы учесть высоту нового баннера (~80px) + высоту старой шапки (~110px) */
+  margin: 200px auto 60px;
   padding: 20px;
   text-align: center;
 }
@@ -360,3 +429,18 @@ tr.active-row:hover {
   background: rgba(255, 255, 255, 0.2) !important; /* Изменил цвет фона при наведении */
 }
 
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .full-width-logo-banner {
+        flex-direction: column;
+        padding: 15px 10px;
+    }
+    .logo-container {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .character {
+        width: 40px;
+    }
+}
