@@ -17,63 +17,46 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === FULL-WIDTH BANNER (Кликабельный, без текста RITUAL) === */
-.full-width-banner {
-  width: 100vw; /* Занимает всю ширину экрана */
-  height: 120px; /* Фиксированная высота 120px */
+/* === STICKY BANNER (Просто и надёжно) === */
+.sticky-banner {
+  width: 100vw;
+  height: 120px;
   background: #0d1117;
-  box-sizing: border-box;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Очень высокий z-index, чтобы быть поверх всего */
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 11;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .banner-link {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.banner-link:hover {
-  opacity: 0.92;
-}
-
-.banner-content {
-  display: flex;
-  align-items: center;
   gap: 20px;
   width: 100%;
   max-width: 1350px;
-  padding: 0 20px;
-  box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
 }
 
-.logo-icon-only {
+.logo-only {
   width: 36px;
   height: auto;
 }
 
-.character-row {
+.characters {
   display: flex;
   align-items: center;
   gap: 14px;
-  height: 100%;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
-.character {
+.char {
   width: 52px;
   height: auto;
   border-radius: 6px;
@@ -83,7 +66,7 @@ body {
 /* === CONTAINER === */
 .container {
   max-width: 1000px;
-  margin: 160px auto 60px; /* увеличено с 140px до 160px */
+  margin: 160px auto 60px; /* Отступ под баннер */
   padding: 20px;
   text-align: center;
 }
@@ -92,14 +75,14 @@ body {
 .welcome-section {
   text-align: center;
   margin-bottom: 30px;
-  color: #ffffff; /* Изменил на белый */
+  color: #ffffff;
 }
 
 .welcome-section h1 {
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 15px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Изменил тень */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 .welcome-section p {
@@ -117,7 +100,7 @@ body {
   display: inline-block;
   margin-top: 15px;
   padding: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.5); /* Изменил цвет границы */
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 15px;
   background: rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -141,15 +124,15 @@ body {
   padding: 15px;
   font-size: 1.1rem;
   background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.4); /* Изменил цвет границы */
+  border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 15px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Изменил тень */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
 }
 
 .stat-box:hover {
-  border-color: #ffffff; /* Изменил цвет границы при наведении */
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); /* Изменил тень при наведении */
+  border-color: #ffffff;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
   transform: scale(1.03);
 }
 
@@ -162,18 +145,18 @@ body {
   width: 60%;
   padding: 10px 15px;
   font-size: 1rem;
-  color: #ffffff; /* Изменил цвет текста */
+  color: #ffffff;
   background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.4); /* Изменил цвет границы */
+  border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 10px;
   outline: none;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* Изменил тень */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
 }
 
 #search:focus {
-  border-color: #ffffff; /* Изменил цвет границы при фокусе */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); /* Изменил тень при фокусе */
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
   transform: scale(1.02);
 }
 
@@ -192,8 +175,8 @@ thead th {
   text-align: center;
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff; /* Изменил цвет текста */
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3); /* Изменил цвет границы */
+  color: #ffffff;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
   user-select: none;
   position: relative;
@@ -201,12 +184,12 @@ thead th {
 }
 
 thead th:hover {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* Изменил тень при наведении */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 thead th.active {
   color: #fff;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* Изменил тень активного заголовка */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .sort-arrow {
@@ -222,8 +205,8 @@ tbody td {
 }
 
 tbody tr:hover {
-  background: rgba(255, 255, 255, 0.1); /* Изменил цвет фона при наведении */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Изменил тень при наведении */
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
 /* === PAGINATION === */
@@ -237,24 +220,24 @@ tbody tr:hover {
 
 .pagination button {
   padding: 8px 15px;
-  color: #ffffff; /* Изменил цвет текста */
+  color: #ffffff;
   font-weight: 500;
   background: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.5); /* Изменил цвет границы */
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .pagination button:hover {
-  background: rgba(255, 255, 255, 0.2); /* Изменил цвет фона при наведении */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Изменил тень при наведении */
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   transform: scale(1.05);
 }
 
 #page-info {
   font-weight: 600;
-  color: #ffffff; /* Изменил цвет текста */
+  color: #ffffff;
 }
 
 
@@ -305,7 +288,7 @@ tbody tr:hover {
 /* === ACCORDION (TWEETS SECTION) === */
 .tweets-row td {
   background: rgba(13, 17, 23, 0.85);
-  border-top: 2px solid rgba(255, 255, 255, 0.3); /* Изменил цвет границы */
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
   padding: 25px;
   animation: fadeInAccordion 0.4s ease;
 }
@@ -333,9 +316,9 @@ tbody tr:hover {
 /* Карточка твита */
 .tweet-card {
   background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.3); /* Изменил цвет границы */
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 18px;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15); /* Изменил тень */
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
   width: 445px;
   color: #e7e9ea;
   padding: 15px 18px;
@@ -349,8 +332,8 @@ tbody tr:hover {
 
 .tweet-card:hover {
   transform: translateY(-5px);
-  border-color: #ffffff; /* Изменил цвет границы при наведении */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Изменил тень при наведении */
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 /* Текст твита */
@@ -373,7 +356,7 @@ tbody tr:hover {
 .tweet-card .tweet-date {
   margin-top: 10px;
   font-size: 0.9rem;
-  color: #ffffff; /* Изменил цвет текста */
+  color: #ffffff;
   opacity: 0.8;
   text-align: right;
   font-style: italic;
@@ -390,18 +373,11 @@ tbody tr:hover {
 
 /* === ACTIVE ROW (User opened) === */
 tr.active-row {
-  background: rgba(255, 255, 255, 0.15) !important; /* Изменил цвет фона */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Изменил тень */
+  background: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
 }
 
 tr.active-row:hover {
-  background: rgba(255, 255, 255, 0.2) !important; /* Изменил цвет фона при наведении */
-}
-
-/* Для мобильных устройств */
-@media (max-width: 1350px) {
-    .full-width-banner {
-        max-width: 100%;
-    }
+  background: rgba(255, 255, 255, 0.2) !important;
 }
