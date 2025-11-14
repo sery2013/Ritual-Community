@@ -17,14 +17,14 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === FULL-WIDTH BANNER (Один фоновый баннер) === */
+/* === FULL-WIDTH BANNER (Один фоновый баннер 1350×120) === */
 .full-width-banner {
   width: 100vw;
   height: 120px;
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: url("https://i.yapx.ru/cIi3H.png") no-repeat center center / cover; /* Ваше изображение */
+  background: url("https://i.imgur.com/YOUR-BANNER-IMAGE.png") no-repeat left center / auto 100%; /* Замените URL на вашу картинку */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
