@@ -9,15 +9,18 @@
 <body>
     <div class="background"></div>
 
-    <!-- === КЛИКАБЕЛЬНЫЙ БАННЕР НА ВСЮ ШИРИНУ (БЕЗ ТЕКСТА RITUAL, ЗАКРЕПЛЁННЫЙ) === -->
-    <div class="sticky-banner">
+    <!-- === КЛИКАБЕЛЬНЫЙ БАННЕР НА ВСЮ ШИРИНУ (ЗАКРЕПЛЁННЫЙ) === -->
+    <div class="full-width-sticky-banner">
       <a href="#" onclick="location.reload(); return false;" class="banner-link">
-        <img src="https://i.yapx.ru/cIi3H.png" alt="Ritual Logo" class="logo-only">
-        <!-- Ряд персонажей (замените src на реальные изображения!) -->
-        <div class="characters">
-          <!-- <img src="images/char1.png" alt="Char 1" class="char">
-          <img src="images/char2.png" alt="Char 2" class="char">
-          <img src="images/char3.png" alt="Char 3" class="char"> -->
+        <!-- Логотип (без текста) -->
+        <img src="https://i.yapx.ru/cIi3H.png" alt="Ritual Logo" class="logo-large">
+        <!-- Ряд персонажей -->
+        <div class="characters-row">
+          <!-- Замените src на реальные изображения! -->
+          <img src="images/char1.png" alt="Character 1" class="character-large">
+          <img src="images/char2.png" alt="Character 2" class="character-large">
+          <img src="images/char3.png" alt="Character 3" class="character-large">
+          <!-- ... добавьте остальные -->
         </div>
       </a>
     </div>
@@ -68,27 +71,4 @@
                     <th id="name-header">User</th>
                     <th id="posts-header">Posts <span class="sort-arrow">▲</span></th>
                     <th id="likes-header">Likes <span class="sort-arrow"></span></th>
-                    <th id="retweets-header">Retweets <span class="sort-arrow"></span></th>
-                    <th id="comments-header">Comments <span class="sort-arrow"></span></th>
-                    <th id="views-col-header">Views <span class="sort-arrow"></span></th>
-                </tr>
-            </thead>
-            <tbody id="leaderboard-body"></tbody>
-        </table>
-
-        <!-- Пагинация -->
-        <div class="pagination">
-            <button id="prev-page">Previous</button>
-            <span id="page-info"></span>
-            <button id="next-page">Next</button>
-        </div>
-    </div>
-
-    <!-- Твиты выбранного пользователя -->
-    <div id="tweets-container" style="margin-top: 20px;">
-        <ul id="tweets-list"></ul>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+                    <th id="retweets-header">Retweets <span class="sort-arrow"></span></
