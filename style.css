@@ -17,50 +17,23 @@ body {
   filter: brightness(0.35) blur(2px);
 }
 
-/* === FULL-WIDTH STICKY BANNER (Просто и надёжно) === */
-.full-width-sticky-banner {
+/* === FULL-WIDTH BANNER (Один фоновый баннер) === */
+.full-width-banner {
   width: 100vw;
   height: 120px;
-  background: #0d1117;
   position: sticky;
   top: 0;
-  z-index: 1000; /* Очень высокий z-index */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  z-index: 1000;
+  background: url("https://i.yapx.ru/cIi3H.png") no-repeat center center / cover; /* Ваше изображение */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0 20px;
-  box-sizing: border-box;
 }
 
 .banner-link {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  display: block;
   width: 100%;
-  max-width: 1350px;
+  height: 100%;
   text-decoration: none;
   color: inherit;
-}
-
-.logo-large {
-  width: 80px; /* Увеличил ширину логотипа */
-  height: auto;
-}
-
-.characters-row {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-grow: 1;
-  justify-content: flex-end;
-}
-
-.character-large {
-  width: 80px; /* Увеличил ширину персонажей */
-  height: auto;
-  border-radius: 8px;
-  object-fit: contain;
 }
 
 /* === CONTAINER === */
