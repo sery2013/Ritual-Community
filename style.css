@@ -1120,4 +1120,28 @@ select option:checked {
 }
 
 
+/* === Белая линия-разделитель для карточек авторов в Top 10 authors (псевдоэлемент) === */
+#top-authors-list li {
+  position: relative; /* Убедимся, что позиционирование работает */
+  margin-bottom: 8px; /* Отступ снизу */
+  padding-bottom: 12px; /* Дополнительный отступ внутри карточки, чтобы контент не прилипал к линии */
+}
+
+#top-authors-list li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #DCDCDC; /* Белый цвет линии */
+  opacity: 0.8; /* Полупрозрачность */
+  z-index: 1; /* Помещаем линию поверх фона карточки */
+}
+
+/* Убираем линию у последнего элемента */
+#top-authors-list li:last-child::after {
+  display: none;
+}
+
 
