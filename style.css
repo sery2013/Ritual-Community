@@ -12,7 +12,7 @@ body {
 .background {
   position: fixed;
   inset: 0;
-  background: url("back.jpg") no-repeat center center / cover;
+  background: url("https://i.imgur.com/hgY0Pj0.png") no-repeat center center / cover;
   z-index: -1;
   filter: brightness(0.35) blur(2px);
 }
@@ -1094,4 +1094,5 @@ select option:checked {
   /* Курсор указывает на возможность клика */
   cursor: pointer;
 }
+
 
