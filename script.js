@@ -604,19 +604,23 @@ function renderAnalytics() {
             labels: labels,
             datasets: [{
               label: 'Tweets per day',
-              backgroundColor: 'rgba(111,227,209,0.9)',
-              borderColor: 'rgba(111,227,209,1)',
+              backgroundColor: 'rgba(72, 209, 204,0.9)',
+              borderColor: 'rgba(64, 224, 208,1)',
               data: counts
             }]
           },
           options: {
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { grid: { display: false }, ticks: { maxRotation: 0, minRotation: 0 } },
-              y: { beginAtZero: true }
-            }
-          }
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                maxRotation: 0,
+                minRotation: 0,
+                color: '#F0FFF0' // Цвет меток (дат) на оси X - ОСТАВИТЬ
+              }
+            },
         });
       }
     }
@@ -671,3 +675,4 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+
