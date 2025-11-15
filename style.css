@@ -1110,7 +1110,7 @@ select option:checked {
   bottom: 0;
   height: 1px;
   background: #DCDCDC; /* Белый цвет линии */
-  opacity: 0.6; /* Прозрачность, можно убрать или изменить */
+  opacity: 0.8; /* Прозрачность, можно убрать или изменить */
   z-index: 1; /* Помещаем линию поверх фона карточки */
 }
 
@@ -1118,5 +1118,6 @@ select option:checked {
 #top-posts-list .top-post-item:last-child::after {
   display: none;
 }
+
 
 
