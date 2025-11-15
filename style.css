@@ -1214,3 +1214,62 @@ select option:checked {
     transform: translateX(20px); /* Максимальное отклонение */
   }
 }
+
+/* === SHARE BUTTON (for individual users in leaderboard table) === */
+.share-btn {
+  width: 24px; /* фиксированная ширина */
+  height: 24px; /* фиксированная высота */
+  min-width: 24px; /* минимальная ширина */
+  min-height: 24px; /* минимальная высота */
+  padding: 0; /* убираем внутренние отступы */
+  margin-left: 8px; /* отступ слева от имени */
+  color: #fff; /* белый цвет текста (иконки) */
+  background: rgba(29, 161, 242, 0.1); /* фон с прозрачностью */
+  border: 1px solid rgba(29, 161, 242, 0.5); /* обводка с прозрачностью */
+  border-radius: 5%; /* скругление 5% */
+  cursor: pointer; /* курсор указывает на кликабельность */
+  transition: all 0.2s ease; /* плавный переход */
+  display: flex; /* Используем flex для центрирования иконки */
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center; /* Центрируем по горизонтали */
+  position: relative; /* Для позиционирования псевдоэлемента */
+  overflow: hidden; /* Обрезаем псевдоэлемент */
+}
+
+/* Полупрозрачные магические символы для share-btn */
+.share-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.share-btn:hover {
+  background: rgba(29, 161, 242, 0.2); /* фон при наведении */
+  border-color: #1DA1F2; /* обводка при наведении */
+  transform: scale(1.1); /* лёгкое увеличение */
+}
+
+/* Дополнительно: убедимся, что SVG внутри кнопки масштабируется */
+.share-btn svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  fill: currentColor; /* Использует цвет, заданный для кнопки */
+  pointer-events: none; /* SVG не перехватывает события клика */
+}
+
+/* Стили для контейнера имени и кнопки share */
+.name-and-share-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* отступ между именем и кнопкой */
+}
