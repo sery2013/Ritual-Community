@@ -604,8 +604,8 @@ function renderAnalytics() {
             labels: labels,
             datasets: [{
               label: 'Tweets per day',
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              borderColor: 'rgba(255, 255, 255, 1)',
+              backgroundColor: 'rgba(0, 255, 255, 0.9)',
+              borderColor: 'rgba(0, 255, 255, 1)',
               data: counts
             }]
           },
@@ -671,4 +671,5 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+
 
