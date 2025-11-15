@@ -1168,3 +1168,49 @@ select option:checked {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block; /* Убедимся, что рамка применяется */
 }
+
+
+
+/* === SNOW EFFECT (для фона leaderboard'а) === */
+/* Контейнер для снежинок */
+.snow-container {
+  position: fixed; /* Фиксируем относительно окна браузера */
+  top: 100px; /* Отступ сверху (высота баннера) */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 100px); /* Высота минус высота баннера */
+  pointer-events: none; /* Позволяет кликать сквозь снег */
+  z-index: 1; /* Помещаем над .background, но под .container и .centered-banner */
+  overflow: hidden; /* Обрезаем снежинки, выходящие за границы */
+}
+
+/* Стиль для отдельной снежинки */
+.snowflake {
+  position: absolute;
+  background-color: #fff; /* Цвет снежинки - белый */
+  border-radius: 50%; /* Делаем её круглой (можно изменить на другую форму) */
+  opacity: 0.7; /* Начальная прозрачность */
+  pointer-events: none;
+  /* Анимация */
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-fill-mode: both; /* Сохраняем конечное состояние анимации */
+}
+
+/* Анимация падения */
+@keyframes fall {
+  to {
+    top: 100%;
+  }
+}
+
+/* Анимация колебания ( sway ) */
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px); /* Максимальное отклонение */
+  }
+}
