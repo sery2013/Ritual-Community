@@ -1145,3 +1145,26 @@ select option:checked {
 }
 
 
+
+/* === Стили для цифр (метрик) в Top 10 authors и Top 10 posts === */
+
+/* Для цифр в Top 10 posts (.top-post-item .metric) - ОСТАЁТСЯ БЕЗ ИЗМЕНЕНИЙ */
+.top-post-item .meta .metric {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 8px;
+  border-radius: 7.5%;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Для цифр в Top 10 authors (после изменения script.js) */
+.author-metric-value {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 8px;
+  border-radius: 7.5%;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block; /* Убедимся, что рамка применяется */
+}
