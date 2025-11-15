@@ -686,5 +686,60 @@ try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init fa
 
 
 
+// === SNOW EFFECT INITIALIZATION ===
+document.addEventListener('DOMContentLoaded', () => {
+    const snowContainer = document.getElementById('snowContainer');
+    if (!snowContainer) {
+        console.warn('Snow container element not found.');
+        return;
+    }
+
+    const snowflakeCount = 50; // Количество снежинок (можно регулировать плотность)
+    const containerRect = snowContainer.getBoundingClientRect();
+
+    for (let i = 0; i < snowflakeCount; i++) {
+        const flake = document.createElement('div');
+        flake.classList.add('snowflake');
+
+        // Случайные размеры снежинок (например, от 2 до 6 пикселей)
+        const size = Math.random() * 4 + 2;
+        flake.style.width = `${size}px`;
+        flake.style.height = `${size}px`;
+
+        // Случайная начальная позиция X
+        const startX = Math.random() * containerRect.width;
+        flake.style.left = `${startX}px`;
+        flake.style.top = `${Math.random() * -containerRect.height}px`; // Начинают падать сверху
+
+        // Случайные параметры анимации для разнообразия
+        const durationFall = Math.random() * 10 + 5; // Длительность падения (5-15 секунд)
+        const durationSway = Math.random() * 4 + 3;  // Длительность колебания (3-7 секунд)
+        const swayAmplitude = Math.random() * 30 + 10; // Амплитуда колебания (10-40px)
+
+        // Применяем анимацию
+        flake.style.animationDuration = `${durationFall}s, ${durationSway}s`;
+        // Для анимации sway используем transform с динамической амплитудой
+        // Это сложнее задать через style, лучше оставить базовую анимацию в CSS
+        // и генерировать уникальные ключевые кадры при необходимости.
+        // Для простоты используем CSS анимацию и немного модифицируем её поведение.
+        // Мы можем динамически создавать уникальные @keyframes, но это громоздко.
+        // Вместо этого, можно просто менять transform вручную через JS с requestAnimationFrame,
+        // но анимация CSS обычно плавнее.
+
+        // Простой способ добавить немного индивидуальности без динамических @keyframes:
+        // Случайная задержка начала анимации
+        flake.style.animationDelay = `${Math.random() * 5}s`; // Задержка от 0 до 5 секунд
+
+        snowContainer.appendChild(flake);
+    }
+
+    // Опционально: пересчитать позиции при изменении размера окна
+    window.addEventListener('resize', () => {
+        const newRect = snowContainer.getBoundingClientRect();
+        // Снежинки останутся на своих относительных позициях,
+        // но можно добавить логику перераспределения при необходимости.
+        // Для базового эффекта пересчёт не обязателен.
+    });
+});
 
 
