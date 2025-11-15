@@ -529,7 +529,7 @@ function renderAnalytics() {
     }
     top.forEach((it, idx) => {
       const li = document.createElement('li');
-      li.innerHTML = `${idx+1}. <strong>${escapeHtml(it.name)}</strong> — ${it.value}`;
+    li.innerHTML = `${idx+1}. <strong>${escapeHtml(it.name)}</strong> — <span class="author-metric-value">${it.value}</span>`;
       listEl.appendChild(li);
     });
   }
@@ -683,6 +683,7 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+
 
 
 
