@@ -590,26 +590,26 @@ function renderAnalytics() {
   }
 
   // render/update Chart.js chart
-  try {
-    const ctx = document.getElementById('analytics-chart');
-    if (ctx) {
-      if (analyticsChart) {
-        analyticsChart.data.labels = labels;
-        analyticsChart.data.datasets[0].data = counts;
-        analyticsChart.update();
-      } else if (window.Chart) {
-        analyticsChart = new Chart(ctx.getContext('2d'), {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Tweets per day',
-              backgroundColor: 'rgba(72, 209, 204,0.9)',
-              borderColor: 'rgba(64, 224, 208,1)',
-              data: counts
-            }]
-          },
-          options: {
+try {
+  const ctx = document.getElementById('analytics-chart');
+  if (ctx) {
+    if (analyticsChart) {
+      analyticsChart.data.labels = labels;
+      analyticsChart.data.datasets[0].data = counts;
+      analyticsChart.update();
+    } else if (window.Chart) {
+      analyticsChart = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Tweets per day',
+            backgroundColor: 'rgba(111,227,209,0.9)', // Цвет заливки столбцов
+            borderColor: 'rgba(111,227,209,1)',     // Цвет обводки столбцов
+             counts
+          }]
+        },
+        options: {
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
@@ -618,15 +618,23 @@ function renderAnalytics() {
               ticks: {
                 maxRotation: 0,
                 minRotation: 0,
-                color: '#F0FFF0' // Цвет меток (дат) на оси X - ОСТАВИТЬ
+                color: '#ffffff' // Цвет меток (дат) на оси X - ОСТАВИТЬ
               }
             },
-        });
-      }
+            y: {
+              beginAtZero: true
+              // ticks: { // <-- УБРАТЬ ЭТОТ БЛОК ИЛИ НЕ ДОБАВЛЯТЬ color СЮДА
+              //   color: '#ffffff' // Цвет меток (цифр) на оси Y - УДАЛИТЬ ЭТУ СТРОКУ
+              // }
+            }
+          }
+        }
+      });
     }
-  } catch (err) {
-    console.warn('Chart render failed', err);
   }
+} catch (err) {
+  console.warn('Chart render failed', err);
+}
 
   // initial render using default selects (if present)
   const authorMetricSelect = document.getElementById('author-metric-select');
@@ -675,4 +683,5 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+
 
