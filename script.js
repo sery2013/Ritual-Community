@@ -149,6 +149,17 @@ function filterData() {
   return data.filter(item => (item.username || "").toLowerCase().includes(query));
 }
 
+// --- SHARE BUTTON FUNCTIONALITY ---
+function shareUserOnTwitter(username) {
+    const tweetText = `Check out @${username} on the Ritual Community Leaderboard! #RitualCommunity #Leaderboard`;
+    const leaderboardUrl = window.location.href;
+    const encodedText = encodeURIComponent(tweetText);
+    const encodedUrl = encodeURIComponent(leaderboardUrl);
+    const twitterIntentUrl = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+    window.open(twitterIntentUrl, '_blank', 'width=600,height=400');
+}
+
+// --- Render Table with Share Button ---
 function renderTable() {
   const tbody = document.getElementById("leaderboard-body");
   tbody.innerHTML = "";
@@ -162,22 +173,57 @@ function renderTable() {
   pageData.forEach(stats => {
     const name = stats.username || "";
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${escapeHtml(name)}</td>
-      <td>${Number(stats.posts || 0)}</td>
-      <td>${Number(stats.likes || 0)}</td>
-      <td>${Number(stats.retweets || 0)}</td>
-      <td>${Number(stats.comments || 0)}</td>
-      <td>${Number(stats.views || 0)}</td>
-    `;
+
+    // --- НАЧАЛО ИЗМЕНЕНИЙ: Создание ячейки с именем и кнопкой ---
+    const nameCell = document.createElement("td");
+    const nameContainer = document.createElement("div");
+    nameContainer.style.display = "flex";
+    nameContainer.style.alignItems = "center";
+    nameContainer.style.gap = "8px";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = escapeHtml(name);
+
+    const shareBtn = document.createElement("button");
+    shareBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: block;"> <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.244 2.25H8.05l4.713 6.231zm-1.161 17.52h1.833L7.08 4.126H5.03z"/> </svg>`; // SVG иконка Twitter
+    shareBtn.className = 'share-btn'; // Класс для стилей
+    shareBtn.title = `Share ${escapeHtml(name)}'s stats on Twitter`; // Подсказка при наведении
+    shareBtn.onclick = function(e) {
+        e.stopPropagation(); // ВАЖНО: Останавливаем всплытие, чтобы клик не сработал на строке таблицы
+        shareUserOnTwitter(name); // Функция, которая откроет окно Twitter Intent
+    };
+
+    nameContainer.appendChild(nameSpan);
+    nameContainer.appendChild(shareBtn);
+    nameCell.appendChild(nameContainer);
+    // --- КОНЕЦ ИЗМЕНЕНИЙ ---
+
+    tr.appendChild(nameCell); // Добавляем ячейку с именем и кнопкой
+    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.posts || 0)}</td>`);
+    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.likes || 0)}</td>`);
+    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.retweets || 0)}</td>`);
+    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.comments || 0)}</td>`);
+    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.views || 0)}</td>`);
+
     tbody.appendChild(tr);
   });
 
   document.getElementById("page-info").textContent = `Page ${currentPage} / ${totalPages}`;
+
+  // Добавляем обработчики клика
+  addUserClickHandlers();
 }
 
+// --- Escaping HTML ---
 function escapeHtml(str) {
-  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // Обеспечиваем, что str - строка, прежде чем обрабатывать
+  const stringified = String(str || '');
+  return stringified
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "<")
+    .replace(/>/g, ">")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 // --- Sorting headers ---
@@ -263,36 +309,6 @@ function addUserClickHandlers() {
     });
 }
 
-// --- Обновляем renderTable, чтобы добавлять клики ---
-function renderTable() {
-    const tbody = document.getElementById("leaderboard-body");
-    tbody.innerHTML = "";
-
-    const filtered = filterData();
-    const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
-    if (currentPage > totalPages) currentPage = totalPages;
-    const start = (currentPage - 1) * perPage;
-    const pageData = filtered.slice(start, start + perPage);
-
-    pageData.forEach(stats => {
-        const name = stats.username || "";
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${escapeHtml(name)}</td>
-          <td>${Number(stats.posts || 0)}</td>
-          <td>${Number(stats.likes || 0)}</td>
-          <td>${Number(stats.retweets || 0)}</td>
-          <td>${Number(stats.comments || 0)}</td>
-          <td>${Number(stats.views || 0)}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-
-    document.getElementById("page-info").textContent = `Page ${currentPage} / ${totalPages}`;
-
-    // Добавляем обработчики клика
-    addUserClickHandlers();
-}
 
 // --- Создание аккордеона твитов ---
 function toggleTweetsRow(tr, username) {
@@ -350,7 +366,7 @@ function toggleTweetsRow(tr, username) {
   document.querySelectorAll(".tweets-row").forEach(row => row.remove());
   document.querySelectorAll("tbody tr").forEach(row => row.classList.remove("active-row"));
 
-  // Если уже был открыт — просто закрываем
+  // Если уже был открыт — просто закрывает
   if (isAlreadyOpen) return;
 
   // Подсветить текущую строку
@@ -741,5 +757,3 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
-
-
