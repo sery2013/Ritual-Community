@@ -610,25 +610,13 @@ function renderAnalytics() {
             }]
           },
           options: {
-  maintainAspectRatio: false,
-  plugins: { legend: { display: false } },
-  scales: {
-    x: { 
-      grid: { display: false }, 
-      ticks: { 
-        maxRotation: 0, 
-        minRotation: 0,
-        color: '#F0FFF0' // Белый цвет для меток (дат) на оси X
-      }
-    },
-    y: { 
-      beginAtZero: true,
-      ticks: {
-        color: '#F0FFF0' // Белый цвет для меток (цифр) на оси Y
-      }
-    }
-  }
-}
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { grid: { display: false }, ticks: { maxRotation: 0, minRotation: 0 } },
+              y: { beginAtZero: true }
+            }
+          }
     },
     y: { beginAtZero: true }
   }
@@ -687,6 +675,7 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+
 
 
 
