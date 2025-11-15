@@ -618,8 +618,17 @@ function renderAnalytics() {
       ticks: { 
         maxRotation: 0, 
         minRotation: 0,
-        color: '#ffffff' // Белый цвет для меток (дат) на оси X
+        color: '#F0FFF0' // Белый цвет для меток (дат) на оси X
       }
+    },
+    y: { 
+      beginAtZero: true,
+      ticks: {
+        color: '#F0FFF0' // Белый цвет для меток (цифр) на оси Y
+      }
+    }
+  }
+}
     },
     y: { beginAtZero: true }
   }
@@ -678,6 +687,7 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+
 
 
 
