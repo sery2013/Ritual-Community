@@ -604,8 +604,8 @@ function renderAnalytics() {
             labels: labels,
             datasets: [{
               label: 'Tweets per day',
-              backgroundColor: 'rgba(0, 255, 255, 0.9)',
-              borderColor: 'rgba(0, 255, 255, 1)',
+              backgroundColor: 'rgba(111,227,209,0.9)',
+              borderColor: 'rgba(111,227,209,1)',
               data: counts
             }]
           },
@@ -617,10 +617,6 @@ function renderAnalytics() {
               y: { beginAtZero: true }
             }
           }
-    },
-    y: { beginAtZero: true }
-  }
-}
         });
       }
     }
@@ -675,8 +671,3 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
-
-
-
-
-
