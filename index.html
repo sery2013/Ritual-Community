@@ -147,9 +147,25 @@
                         <div class="stat-box" id="avg-likes">Avg Likes: -</div>
                         <div class="stat-box" id="avg-views">Avg Views: -</div>
                     </div>
+                    
+                    <!-- Heatmap Section -->
+                    <div class="analytics-block" style="margin-top: 16px;">
+                        <h3>Activity Heatmap (Tweets by Day & Hour)</h3>
+                        <div id="heatmap-container" style="display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; margin-top: 12px;"></div>
+                        <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.85rem; color: #999;">
+                            <div>Sun</div> <div>Mon</div> <div>Tue</div> <div>Wed</div> <div>Thu</div> <div>Fri</div> <div>Sat</div>
+                        </div>
+                    </div>
+                    
                     <!-- Chart: tweets per day -->
                     <div style="margin-top:16px;">
                         <canvas id="analytics-chart" height="120"></canvas>
+                    </div>
+                    
+                    <!-- Export Buttons -->
+                    <div style="margin-top: 16px; display: flex; gap: 10px;">
+                        <button id="export-csv" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;">Export CSV</button>
+                        <button id="export-json" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;">Export JSON</button>
                     </div>
                 </div>
             </section>
