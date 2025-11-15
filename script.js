@@ -1,3 +1,4 @@
+// === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
 let rawData = [];
 let data = [];
 let allTweets = [];
@@ -477,6 +478,108 @@ function setupTabs() {
   });
 }
 
+// --- Функция для отрисовки тепловой гистограммы ---
+function renderHeatmap(tweets) {
+  const container = document.getElementById('heatmap-container');
+  if (!container) return;
+
+  // Массив 7x24, инициализирован нулями
+  const heatmap = Array(7).fill().map(() => Array(24).fill(0));
+
+  // Подсчёт твитов по (день, час)
+  tweets.forEach(t => {
+    const created = t.tweet_created_at || t.created_at || t.created;
+    if (!created) return;
+    const d = new Date(created);
+    if (isNaN(d)) return;
+    const day = d.getUTCDay(); // 0 = воскресенье
+    const hour = d.getUTCHours();
+    heatmap[day][hour] = (heatmap[day][hour] || 0) + 1;
+  });
+
+  // Нахождение максимума для нормализации цвета
+  const max = Math.max(...heatmap.flat());
+
+  // Очистка контейнера
+  container.innerHTML = '';
+
+  // Создание ячеек
+  for (let day = 0; day < 7; day++) {
+    for (let hour = 0; hour < 24; hour++) {
+      const count = heatmap[day][hour] || 0;
+      const cell = document.createElement('div');
+      cell.style.width = '100%';
+      cell.style.aspectRatio = '1';
+      cell.style.borderRadius = '3px';
+      cell.title = `${count} tweet(s)\n${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][day]}, ${hour}:00 UTC`;
+
+      if (count === 0) {
+        cell.style.backgroundColor = 'rgba(255,255,255,0.03)';
+      } else {
+        // Цвет от светло-бирюзового к насыщенному (#6fe3d1 → #00a896)
+        const intensity = count / (max || 1); // 0..1
+        const r = Math.floor(111 * intensity + 255 * (1 - intensity));
+        const g = Math.floor(227 * intensity + 255 * (1 - intensity));
+        const b = Math.floor(209 * intensity + 255 * (1 - intensity));
+        cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+      }
+      container.appendChild(cell);
+    }
+  }
+}
+
+// --- Функция для скачивания файла ---
+function downloadFile(filename, content, mimeType = 'text/plain') {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// --- Функция экспорта в CSV ---
+function exportToCSV() {
+  const users = window._analyticsFilteredData?.users || {};
+  const rows = [];
+
+  // Заголовок
+  rows.push(['Username', 'Posts', 'Likes', 'Views'].join(','));
+
+  // Данные
+  for (const [username, stats] of Object.entries(users)) {
+    rows.push([username, stats.posts, stats.likes, stats.views].map(v => `"${v}"`).join(','));
+  }
+
+  const csvContent = rows.join('\n');
+  downloadFile('leaderboard-export.csv', csvContent, 'text/csv');
+}
+
+// --- Функция экспорта в JSON ---
+function exportToJSON() {
+  const data = window._analyticsFilteredData || {};
+  const jsonContent = JSON.stringify(data, null, 2);
+  downloadFile('leaderboard-export.json', jsonContent, 'application/json');
+}
+
+// --- Функция привязки кнопок экспорта ---
+function bindExportButtons() {
+  const csvBtn = document.getElementById('export-csv');
+  const jsonBtn = document.getElementById('export-json');
+  if (csvBtn && !csvBtn._bound) {
+    csvBtn.addEventListener('click', exportToCSV);
+    csvBtn._bound = true;
+  }
+  if (jsonBtn && !jsonBtn._bound) {
+    jsonBtn.addEventListener('click', exportToJSON);
+    jsonBtn._bound = true;
+  }
+}
+
+
 function renderAnalytics() {
   // Filter tweets by the selected analytics period
   let tweets = Array.isArray(allTweets) ? allTweets : [];
@@ -669,6 +772,10 @@ try {
     postMetricSelect.addEventListener('change', e => renderTopPosts(e.target.value));
     postMetricSelect._bound = true;
   }
+
+  // --- ВЫЗОВЫ НОВЫХ ФУНКЦИЙ ---
+  renderHeatmap(tweets);
+  bindExportButtons();
 }
 
 // Analytics time period filter
