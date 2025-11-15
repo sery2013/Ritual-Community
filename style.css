@@ -1095,5 +1095,28 @@ select option:checked {
   cursor: pointer;
 }
 
+/* === Белая линия-разделитель для карточек постов в Top 10 posts (псевдоэлемент) === */
+#top-posts-list .top-post-item {
+  position: relative; /* Убедимся, что позиционирование работает */
+  margin-bottom: 8px; /* Отступ снизу */
+  padding-bottom: 12px; /* Дополнительный отступ внутри карточки, чтобы контент не прилипал к линии */
+}
+
+#top-posts-list .top-post-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #DCDCDC; /* Белый цвет линии */
+  opacity: 0.6; /* Прозрачность, можно убрать или изменить */
+  z-index: 1; /* Помещаем линию поверх фона карточки */
+}
+
+/* Убираем линию у последнего элемента */
+#top-posts-list .top-post-item:last-child::after {
+  display: none;
+}
 
 
