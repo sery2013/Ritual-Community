@@ -121,12 +121,13 @@ def build_leaderboard(tweets):
         })
 
         stats["posts"] += 1
-        stats["likes"] += t.get("favorite_count", 0)
-        stats["retweets"] += t.get("retweet_count", 0)
-        stats["comments"] += t.get("reply_count", 0)
-        stats["quotes"] += t.get("quote_count", 0)
-        stats["views"] += t.get("views_count", 0)
-
+        # --- ИСПРАВЛЕНИЕ: Явно обработать None ---
+        stats["likes"] += (t.get("favorite_count") or 0)
+        stats["retweets"] += (t.get("retweet_count") or 0)
+        stats["comments"] += (t.get("reply_count") or 0)
+        stats["quotes"] += (t.get("quote_count") or 0)
+        stats["views"] += (t.get("views_count") or 0)
+        # --- КОНЕЦ ИСПРАВЛЕНИЯ ---
 
     leaderboard_list = [[user, stats] for user, stats in leaderboard.items()]
     save_json(LEADERBOARD_FILE, leaderboard_list)
@@ -142,5 +143,3 @@ def build_leaderboard(tweets):
 if __name__ == "__main__":
     tweets = collect_all_tweets()
     build_leaderboard(tweets)
-
-
