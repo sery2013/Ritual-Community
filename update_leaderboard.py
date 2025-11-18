@@ -15,6 +15,7 @@ HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 TWEETS_FILE = "all_tweets.json"
 LEADERBOARD_FILE = "leaderboard.json"
 LAST_UPDATED_FILE = "last_updated.txt"
+KNOWN_IDS_FILE = "known_tweet_ids.txt" # <-- НОВЫЙ ФАЙЛ
 
 def save_json(path, data):
     with open(path, "w", encoding="utf-8") as f:
@@ -23,6 +24,22 @@ def save_json(path, data):
 def save_text(path, text):
     with open(path, "w", encoding="utf-8") as f:
         f.write(text)
+
+# --- НОВАЯ ФУНКЦИЯ ---
+def load_known_ids():
+    """Загружает все известные ID твитов из файла."""
+    try:
+        with open(KNOWN_IDS_FILE, "r", encoding="utf-8") as f:
+            return set(line.strip() for line in f if line.strip())
+    except FileNotFoundError:
+        return set()
+
+def save_known_ids(ids):
+    """Сохраняет все известные ID твитов в файл."""
+    with open(KNOWN_IDS_FILE, "w", encoding="utf-8") as f:
+        for tweet_id in sorted(ids):
+            f.write(tweet_id + "\n")
+# --- КОНЕЦ НОВОЙ ФУНКЦИИ ---
 
 def fetch_tweets(cursor=None, limit=50):
     params = {"type": "Latest", "limit": limit}
@@ -34,10 +51,12 @@ def fetch_tweets(cursor=None, limit=50):
 
 
 def collect_all_tweets():
-    all_tweets = []  # Начинаем с пустого списка
-    seen_ids = set() # И пустого множества ID
+    all_tweets = []  # Для all_tweets.json (новые твиты за запуск)
+    seen_ids_current_run = set() # Для проверки дубликатов в ЭТОМ запуске
+    known_ids = load_known_ids() # Загружаем историю ID
     cursor = None
     total_new = 0
+    max_new_tweets = 1000  # Лимит на случай, если API не остановится вообще
 
     while True:
         data = fetch_tweets(cursor)
@@ -48,18 +67,23 @@ def collect_all_tweets():
             logging.info("❌ Нет новых твитов от API.")
             break
 
-        # Фильтруем новые твиты, которых ещё нет в seen_ids за ЭТОТ запуск
-        new_tweets = [t for t in tweets if t["id_str"] not in seen_ids]
+        # --- КЛЮЧЕВОЕ ИЗМЕНЕНИЕ: Проверяем против ВСЕХ ИСТОРИЧЕСКИХ ID ---
+        new_tweets = [t for t in tweets if t["id_str"] not in known_ids and t["id_str"] not in seen_ids_current_run]
 
         if not new_tweets:
-            logging.info("✅ Новых твитов больше нет (все в пакете уже видели в этом запуске). Останавливаем сбор.")
+            logging.info("✅ Новых твитов больше нет (все твиты уже были в истории). Останавливаем сбор.")
             break
 
         all_tweets.extend(new_tweets)
-        seen_ids.update(t["id_str"] for t in new_tweets)
+        seen_ids_current_run.update(t["id_str"] for t in new_tweets)
         total_new += len(new_tweets)
 
-        logging.info(f"✅ Загружено {len(new_tweets)} новых твитов (всего в этом запуске: {len(all_tweets)})")
+        logging.info(f"✅ Загружено {len(new_tweets)} новых твитов (всего новых в этом запуске: {len(all_tweets)})")
+
+        # --- ОБЯЗАТЕЛЬНЫЙ ЛИМИТ ---
+        if len(all_tweets) >= max_new_tweets:
+            logging.warning(f"✅ Достигнут лимит в {max_new_tweets} новых твитов. Останавливаем сбор.")
+            break
 
         if not cursor:
             logging.info("✅ Достигнут конец списка твитов от API.")
@@ -67,9 +91,12 @@ def collect_all_tweets():
 
         time.sleep(3) # Уважаем лимиты API
 
-    # Перезаписываем all_tweets.json ТОЛЬКО новыми твитами за этот запуск
+    # --- Сохраняем ТОЛЬКО НОВЫЕ твиты в all_tweets.json ---
     save_json(TWEETS_FILE, all_tweets)
-    logging.info(f"\n✅ Сбор завершён. Всего твитов в файле: {len(all_tweets)}, новых: {total_new}")
+    # --- СОХРАНЯЕМ ВСЕ ИЗВЕСТНЫЕ ID (старые + новые из этого запуска) ---
+    known_ids.update(t["id_str"] for t in all_tweets) # Обновляем известные ID новыми
+    save_known_ids(known_ids) # Сохраняем обновлённый список
+    logging.info(f"\n✅ Сбор завершён. Новых твитов: {len(all_tweets)}. Всего известных ID: {len(known_ids)}")
     return all_tweets
 
 
