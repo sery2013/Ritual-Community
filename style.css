@@ -178,7 +178,7 @@ body {
 table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 5%; /* скругление 5-10% */
+  border-radius: 3%; /* скругление 5-10% */
   overflow: hidden;
   background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
   backdrop-filter: blur(5px);
@@ -1273,3 +1273,340 @@ select option:checked {
   align-items: center;
   gap: 8px; /* отступ между именем и кнопкой */
 }
+
+
+
+/* === MOBILE ADAPTATION === */
+@media (max-width: 768px) {
+  /* 1. Сделать таблицу прокручиваемой по горизонтали */
+  #leaderboard-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Плавная прокрутка на iOS */
+    margin: 0 -15px; /* Отрицательные отступы компенсируют padding контейнера */
+    padding: 0 15px; /* Добавляем внутренние отступы */
+  }
+
+  table {
+    min-width: 100%;
+    width: fit-content; /* Позволяет таблице быть шире контейнера */
+    margin: 0;
+    border-radius: 5%; /* Сохраняем скругление */
+  }
+
+  /* 2. Уменьшить отступы и шрифты */
+  .container {
+    padding: 10px;
+    margin: 140px auto 40px; /* Уменьшаем верхний отступ, так как баннер на мобильном может быть выше */
+  }
+
+  .welcome-section h1 {
+    font-size: 2rem;
+  }
+
+  .welcome-section p {
+    font-size: 1rem;
+  }
+
+  .tabs {
+    gap: 8px;
+  }
+
+  .tab-btn {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stat-box {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  #search {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 1rem;
+  }
+
+  .time-filter {
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 15px;
+    width: fit-content;
+    margin: 15px auto;
+  }
+
+  .time-filter label,
+  .time-filter select {
+    font-size: 0.95rem;
+  }
+
+  .pagination button,
+  .pagination span {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+
+  /* 3. Уменьшить размер иконки "Поделиться в Twitter" */
+  .share-btn {
+    width: 20px;
+    height: 20px;
+    margin-left: 6px;
+    font-size: 0.8rem;
+  }
+
+  /* 4. Уменьшить размер твитов в аккордеоне */
+  .tweet-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px 12px;
+  }
+
+  .tweet-card p {
+    font-size: 0.9rem;
+  }
+
+  .tweet-card .tweet-date {
+    font-size: 0.8rem;
+  }
+
+  /* 5. Сделать блоки аналитики вертикальными */
+  .analytics-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .analytics-row .stat-box {
+    width: 100% !important;
+  }
+
+  /* 6. Упростить Top 10 списки */
+  #top-authors-list li,
+  .top-post-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 12px;
+  }
+
+  #top-authors-list li .author-metric-value,
+  .top-post-item .meta {
+    margin-top: 4px;
+    width: fit-content;
+  }
+}
+
+
+
+/* === SEARCH AND TIME FILTER IN ONE LINE === */
+
+.search-time-filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* Градиент */
+    border-radius: 7.5%; /* Скругление */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Полупрозрачные магические символы для search-time-filter-container */
+.search-time-filter-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.search-label {
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 5%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-input::placeholder {
+    color: #a9ddd3;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #6fe3d1;
+    box-shadow: 0 0 10px rgba(111, 227, 209, 0.5);
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-label {
+    font-weight: 600;
+    color: #a9ddd3;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.time-select {
+    padding: 8px 12px;
+    border-radius: 5%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #2F4F4F;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 180ms ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Полупрозрачные магические символы для time-select */
+.time-select::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.time-select:hover {
+    background: #3a5f5f;
+    border-color: rgba(255,255,255,0.3);
+}
+
+.time-select:focus {
+    box-shadow: 0 6px 18px rgba(111,227,209,0.07);
+    outline: none;
+}
+
+
+/* === СМЕЩЕНИЕ ЗАГОЛОВКА "User" ВПРАВО (на 1.5 см или 15px от левого края) === */
+#name-header {
+  text-align: left !important; /* Выравнивание по левому краю */
+  padding-left: 30px !important; /* Отступ слева. Меняйте значение (15px) на 10px или 20px для другого сдвига */
+  /* Остальные стили, если были, можно убрать или оставить, если они не мешают */
+}
+
+
+
+
+/* === ОБЪЕДИНЁННЫЙ БЛОК В НИЖНЕЙ ЧАСТИ === */
+.combined-bottom-block {
+  display: flex; /* Используем flexbox */
+  flex-wrap: wrap; /* Разрешаем перенос на новую строку при необходимости */
+  align-items: center; /* Выравнивание по центру по вертикали */
+  justify-content: space-between; /* Распределяет пространство между дочерними элементами */
+  gap: 10px; /* Небольшой отступ между элементами */
+  margin-top: 15px; /* Отступ сверху */
+  padding: 10px; /* Внутренний отступ */
+  background: rgba(255, 255, 255, 0.02); /* Легкий фон, если нужно */
+  border-radius: 12px; /* Скругление углов */
+  width: 100%; /* Занимает всю ширину родителя */
+}
+
+/* Убедимся, что .team-box и .tabs растягиваются правильно */
+.combined-bottom-block .team-box {
+  margin: 0; /* Сбрасываем отступы, если были */
+  flex: 1; /* Занимает доступное пространство */
+  min-width: 0; /* Позволяет сжиматься */
+}
+
+.combined-bottom-block .team-box p {
+  margin: 0; /* Сбрасываем отступы у параграфа */
+  white-space: nowrap; /* Предотвращаем перенос текста внутри team-box */
+  overflow: hidden; /* Скрываем переполнение */
+  text-overflow: ellipsis; /* Добавляем многоточие при переполнении */
+}
+
+.combined-bottom-block .tabs {
+  display: flex; /* Убедимся, что .tabs использует flex */
+  gap: 5px; /* Отступ между кнопками вкладок */
+  margin: 0; /* Сбрасываем отступы */
+  /* Убираем стили, которые могли задавать display: block или width: 100% */
+  width: auto; /* Ширина по содержимому */
+}
+
+
+
+.welcome-block {
+    background-color: transparent; /* Полностью прозрачный фон, как вы предпочитаете */
+    border: 1px solid #2F4F4F; /* Рамка цвета #2F4F4F, как для лидерборда */
+    border-radius: 5%; /* Скругленные края, как вы предпочитаете для большинства блоков */
+    padding: 20px; /* Отступы внутри блока для лучшего вида */
+    color: white; /* Белый текст, как вы предпочитаете */
+    text-align: left; /* Выравнивание текста по левому краю */
+    margin: 20px auto; /* Центрирование блока по горизонтали с отступом сверху/снизу */
+    max-width: 800px; /* Ограничивает ширину для лучшего чтения на больших экранах */
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* Легкая тень для глубины (опционально, но рекомендуется) */
+}
+
+.welcome-block h1 {
+    margin-top: 0; /* Убирает верхний отступ у заголовка */
+    margin-bottom: 15px; /* Добавляет отступ под заголовком */
+    font-size: 2rem; /* Увеличивает размер заголовка */
+    text-align: center; /* Заголовок можно оставить по центру, как акцент */
+}
+
+
+/* Это правило будет иметь тот же приоритет, что и a:link, a:visited */
+a {
+    color: white !important; /* !important принудительно устанавливает цвет */
+    text-decoration: underline; /* Опционально: добавляет подчеркивание */
+}
+
+/* ИЛИ, если вы хотите переопределить конкретно a:link и a:visited: */
+/*
+a:link, a:visited {
+    color: white !important;
+    text-decoration: underline;
+}
+*/
