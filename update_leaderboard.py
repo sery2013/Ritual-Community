@@ -3,7 +3,7 @@ import json
 import time
 import logging
 import os
-from datetime import datetime # Добавлен импорт datetime
+from datetime import datetime
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 
@@ -14,15 +14,7 @@ HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
 TWEETS_FILE = "all_tweets.json"
 LEADERBOARD_FILE = "leaderboard.json"
-LAST_UPDATED_FILE = "last_updated.txt" # Новое имя файла для даты
-
-def load_json(path):
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
-
+LAST_UPDATED_FILE = "last_updated.txt"
 
 def save_json(path, data):
     with open(path, "w", encoding="utf-8") as f:
@@ -42,38 +34,43 @@ def fetch_tweets(cursor=None, limit=50):
 
 
 def collect_all_tweets():
-    all_tweets = []
-    seen_ids = set()
-
+    all_tweets = []  # Начинаем с пустого списка
+    seen_ids = set() # И пустого множества ID
     cursor = None
     total_new = 0
+
     while True:
         data = fetch_tweets(cursor)
         tweets = data.get("tweets", [])
         cursor = data.get("next_cursor")
 
         if not tweets:
+            logging.info("❌ Нет новых твитов от API.")
             break
 
+        # Фильтруем новые твиты, которых ещё нет в seen_ids за ЭТОТ запуск
         new_tweets = [t for t in tweets if t["id_str"] not in seen_ids]
+
         if not new_tweets:
+            logging.info("✅ Новых твитов больше нет (все в пакете уже видели в этом запуске). Останавливаем сбор.")
             break
 
         all_tweets.extend(new_tweets)
         seen_ids.update(t["id_str"] for t in new_tweets)
         total_new += len(new_tweets)
 
-        logging.info(f"✅ Загружено {len(new_tweets)} новых твитов (всего: {len(all_tweets)})")
+        logging.info(f"✅ Загружено {len(new_tweets)} новых твитов (всего в этом запуске: {len(all_tweets)})")
 
         if not cursor:
+            logging.info("✅ Достигнут конец списка твитов от API.")
             break
 
-        time.sleep(3)
+        time.sleep(3) # Уважаем лимиты API
 
+    # Перезаписываем all_tweets.json ТОЛЬКО новыми твитами за этот запуск
     save_json(TWEETS_FILE, all_tweets)
-    logging.info(f"\nСбор завершён. Всего твитов: {len(all_tweets)}")
+    logging.info(f"\n✅ Сбор завершён. Всего твитов в файле: {len(all_tweets)}, новых: {total_new}")
     return all_tweets
-
 
 
 def build_leaderboard(tweets):
@@ -107,7 +104,7 @@ def build_leaderboard(tweets):
     leaderboard_list = [[user, stats] for user, stats in leaderboard.items()]
     save_json(LEADERBOARD_FILE, leaderboard_list)
 
-    # --- НОВЫЙ КОД ---
+    # --- НОВЫЙ КОД (автообновление даты) ---
     updated_at = datetime.now().strftime("%B %d, %Y")  # Например: November 18, 2025
     save_text(LAST_UPDATED_FILE, updated_at)
     # -----------------
