@@ -874,7 +874,13 @@ function setLanguage(lang) {
         followDevTextElement.appendChild(followDevLinkElement);
     }
     // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
-
+    // --- ОБНОВЛЕНИЕ ТЕКСТА "Last updated:" ---
+    const lastUpdatedLabel = document.getElementById('label-last-updated');
+    if (lastUpdatedLabel) {
+        // Предполагаем, что текст до span не меняется, и меняем только его содержимое
+        lastUpdatedLabel.textContent = lang === 'en' ? 'Last updated:' : 'Последнее обновление:';
+    }
+    // --- КОНЕЦ ОБНОВЛЕНИЯ ТЕКСТА "Last updated:" ---
 
     // --- ОБНОВЛЕНИЕ ТЕКСТА В ФИЛЬТРАХ И ЭЛЕМЕНТАХ LEADERBOARD ---
     const timeSelectOptions = document.querySelectorAll('#time-select option');
@@ -1133,3 +1139,4 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
