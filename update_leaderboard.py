@@ -7,7 +7,7 @@ import os
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 
 API_KEY = os.getenv("API_KEY")
-COMMUNITY_ID = "1951903018464772103"
+COMMUNITY_ID = "1896991026272723220"
 BASE_URL = f"https://api.socialdata.tools/twitter/community/{COMMUNITY_ID}/tweets"
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
@@ -109,3 +109,4 @@ def build_leaderboard(tweets):
 if __name__ == "__main__":
     tweets = collect_all_tweets()
     build_leaderboard(tweets)
+
