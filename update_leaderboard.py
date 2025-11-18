@@ -56,7 +56,7 @@ def collect_all_tweets():
     known_ids = load_known_ids() # Загружаем историю ID
     cursor = None
     total_new = 0
-    max_new_tweets = 2500  # Лимит на случай, если API не остановится вообще
+    max_new_tweets = 4000  # Лимит на случай, если API не остановится вообще
 
     while True:
         data = fetch_tweets(cursor)
@@ -93,11 +93,11 @@ def collect_all_tweets():
 
     # --- Сохраняем ТОЛЬКО НОВЫЕ твиты в all_tweets.json ---
     save_json(TWEETS_FILE, all_tweets)
-    # --- СОХРАНЯЕМ ВСЕ ИЗВЕСТНЫЕ ID (старые + новые из этого запуска) ---
-    known_ids.update(t["id_str"] for t in all_tweets) # Обновляем известные ID новыми
-    save_known_ids(known_ids) # Сохраняем обновлённый список
-    logging.info(f"\n✅ Сбор завершён. Новых твитов: {len(all_tweets)}. Всего известных ID: {len(known_ids)}")
-    return all_tweets
+    # --- ВОЗВРАЩАЕМ СОБРАННЫЕ ТВИТЫ И ОБНОВЛЁННЫЙ СПИСОК ИЗВЕСТНЫХ ID ---
+    final_known_ids = known_ids.copy() # Копируем, чтобы не изменять оригинал
+    final_known_ids.update(t["id_str"] for t in all_tweets) # Обновляем копию
+    logging.info(f"\n✅ Сбор завершён. Новых твитов: {len(all_tweets)}. Всего известных ID будет: {len(final_known_ids)}")
+    return all_tweets, final_known_ids # <-- ВОЗВРАЩАЕМ ОБА
 
 
 def build_leaderboard(tweets):
@@ -141,5 +141,6 @@ def build_leaderboard(tweets):
 
 
 if __name__ == "__main__":
-    tweets = collect_all_tweets()
-    build_leaderboard(tweets)
+    tweets, final_known_ids = collect_all_tweets() # <-- ПОЛУЧАЕМ ИЗВЕСТНЫЕ ID
+    build_leaderboard(tweets) # <-- СНАЧАЛА ПОСТРОИТЬ
+    save_known_ids(final_known_ids) # <-- ПОТОМ СОХРАНИТЬ ID (ТОЛЬКО ЕСЛИ ВСЁ УСПЕШНО)
