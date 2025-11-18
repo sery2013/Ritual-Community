@@ -3,7 +3,6 @@ import json
 import time
 import logging
 import os
-from datetime import datetime
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 
@@ -14,16 +13,16 @@ HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
 TWEETS_FILE = "all_tweets.json"
 LEADERBOARD_FILE = "leaderboard.json"
-LAST_UPDATED_FILE = "last_updated.txt"
+# LAST_UPDATED_FILE = "last_updated.txt"  # <-- УДАЛЕНО
 KNOWN_IDS_FILE = "known_tweet_ids.txt" # <-- НОВЫЙ ФАЙЛ
 
 def save_json(path, data):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-def save_text(path, text):
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(text)
+# def save_text(path, text):  # <-- УДАЛЕНА ФУНКЦИЯ
+#     with open(path, "w", encoding="utf-8") as f:
+#         f.write(text)
 
 # --- НОВАЯ ФУНКЦИЯ ---
 def load_known_ids():
@@ -132,9 +131,9 @@ def build_leaderboard(tweets):
     leaderboard_list = [[user, stats] for user, stats in leaderboard.items()]
     save_json(LEADERBOARD_FILE, leaderboard_list)
 
-    # --- НОВЫЙ КОД (автообновление даты) ---
-    updated_at = datetime.now().strftime("%B %d, %Y")  # Например: November 18, 2025
-    save_text(LAST_UPDATED_FILE, updated_at)
+    # --- КОД (автообновление даты) УДАЛЁН ---
+    # updated_at = datetime.now().strftime("%B %d, %Y")  # Например: November 18, 2025
+    # save_text(LAST_UPDATED_FILE, updated_at)
     # -----------------
 
     logging.info(f"🏆 Лидерборд обновлён ({len(leaderboard_list)} участников).")
