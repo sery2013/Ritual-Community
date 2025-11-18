@@ -94,6 +94,16 @@
     </style>
 </head>
 <body>
+    <script>
+      fetch("last_updated.txt")
+        .then(response => response.text())
+        .then(text => {
+          document.getElementById("last-updated").textContent = text.trim();
+        })
+        .catch(() => {
+          document.getElementById("last-updated").textContent = "Unknown";
+        });
+    </script>
     <!-- === BANNER (теперь просто обновляет страницу) === -->
     <div class="centered-banner">
         <a href="javascript:location.reload()" class="banner-link"></a>
@@ -117,7 +127,7 @@
             <p id="welcome-desc-3">By clicking on any participant, you can view their works directly on the website.</p>
             <p id="welcome-desc-4">By clicking on any metric (for example, views), you can filter by it.</p>
             <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
-<p><strong>Last updated:</strong> November 18, 2025</p>
+            <p><strong>Last updated:</strong> <span id="last-updated">Loading...</span></p>
         </div>
 
         <!-- Новый объединённый блок (вкладки и follow developer в одной строке) -->
@@ -324,4 +334,3 @@
  
 </body>
 </html>
-
