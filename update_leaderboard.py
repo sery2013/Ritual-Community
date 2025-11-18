@@ -56,7 +56,7 @@ def collect_all_tweets():
     known_ids = load_known_ids() # Загружаем историю ID
     cursor = None
     total_new = 0
-    max_new_tweets = 1000  # Лимит на случай, если API не остановится вообще
+    max_new_tweets = 5000  # Лимит на случай, если API не остановится вообще
 
     while True:
         data = fetch_tweets(cursor)
@@ -142,3 +142,4 @@ def build_leaderboard(tweets):
 if __name__ == "__main__":
     tweets = collect_all_tweets()
     build_leaderboard(tweets)
+
