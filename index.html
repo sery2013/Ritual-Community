@@ -28,12 +28,80 @@
           background-size: 1350px 100px; /* точный размер изображения */
           cursor: pointer; /* Курсор указывает на возможность клика */
         }
+
+        /* === LANGUAGE SWITCHER (в правом верхнем углу) === */
+        .lang-switcher {
+          position: absolute; /* Используем absolute, чтобы точно прижать к углу внутри sticky .centered-banner */
+          top: 10px;
+          right: 10px;
+          z-index: 1001; /* Выше, чем баннер */
+          display: flex;
+          gap: 2px; /* Маленький зазор между кнопками */
+        }
+
+        .lang-btn {
+          background: #2F4F4F;
+          color: #aaa; /* Неактивный цвет */
+          border: 1px solid #6fe3d1;
+          border-radius: 5px;
+          padding: 5px 8px;
+          cursor: pointer;
+          font-size: 0.9em;
+          transition: background-color 0.2s, color 0.2s;
+        }
+
+        .lang-btn:first-child {
+          border-radius: 5px 0 0 5px; /* Скругление только у левой кнопки */
+        }
+
+        .lang-btn:last-child {
+          border-radius: 0 5px 5px 0; /* Скругление только у правой кнопки */
+          border-left: none; /* Убираем левую границу у правой кнопки */
+        }
+
+        .lang-btn.active {
+          background: #6fe3d1; /* Цвет активной кнопки */
+          color: #0d1117; /* Цвет текста активной кнопки */
+        }
+
+        .lang-btn:hover {
+          background: #4a6b6b; /* Цвет при наведении */
+        }
+
+        .lang-btn.active:hover {
+          background: #5bc0bd; /* Цвет активной кнопки при наведении */
+        }
+
+        /* === СТИЛИ ДЛЯ БЛОКА ПРИВЕТСТВИЯ === */
+        .welcome-block {
+            background-color: transparent; /* Полностью прозрачный фон, как вы предпочитаете */
+            border: 1px solid #2F4F4F; /* Рамка цвета #2F4F4F, как для лидерборда */
+            border-radius: 5%; /* Скругленные края, как вы предпочитаете для большинства блоков */
+            padding: 20px; /* Отступы внутри блока для лучшего вида */
+            color: white; /* Белый текст, как вы предпочитаете */
+            text-align: left; /* Выравнивание текста по левому краю */
+            margin: 20px auto; /* Центрирование блока по горизонтали с отступом сверху/снизу */
+            max-width: 800px; /* Ограничивает ширину для лучшего чтения на больших экранах */
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* Легкая тень для глубины (опционально, но рекомендуется) */
+        }
+
+        .welcome-block h1 {
+            margin-top: 0; /* Убирает верхний отступ у заголовка */
+            margin-bottom: 15px; /* Добавляет отступ под заголовком */
+            font-size: 2rem; /* Увеличивает размер заголовка */
+            text-align: center; /* Заголовок можно оставить по центру, как акцент */
+        }
     </style>
 </head>
 <body>
     <!-- === BANNER (теперь просто обновляет страницу) === -->
     <div class="centered-banner">
         <a href="javascript:location.reload()" class="banner-link"></a>
+        <!-- === LANGUAGE SWITCHER (в правом верхнем углу) === -->
+        <div class="lang-switcher">
+            <span id="lang-en" class="lang-btn active" data-lang="en">EN</span>
+            <span id="lang-ru" class="lang-btn" data-lang="ru">RU</span>
+        </div>
     </div>
 
     <div class="background"></div>
@@ -41,26 +109,28 @@
     <!-- УБРАН: <div class="header-fixed"> <h1>Ritual Community</h1> </div> -->
 
     <div class="container">
-        <!-- === WELCOME SECTION === -->
-        <div class="welcome-section">
-            <h1>WELCOME RITUALISTS!</h1>
-            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
-            <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
-            <p>By clicking on any participant, you can view their works directly on the website.</p>
-            <p>By clicking on any metric (for example, views), you can filter by it.</p>
-            <p><b><span style="color:#90EE90;">Updated every 2 days</span></b></p>
-            <p>Support us on Twitter!</p>
+        <!-- === WELCOME SECTION (теперь в рамке) === -->
+        <div class="welcome-block">
+            <h1 id="welcome-title">WELCOME RITUALISTS!</h1>
+            <p id="welcome-desc-1">This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
+            <p id="welcome-desc-2">If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
+            <p id="welcome-desc-3">By clicking on any participant, you can view their works directly on the website.</p>
+            <p id="welcome-desc-4">By clicking on any metric (for example, views), you can filter by it.</p>
+            <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
+            <p><b><span id="last-updated-static" style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
+        </div>
 
+        <!-- Новый объединённый блок (вкладки и follow developer в одной строке) -->
+        <div class="combined-bottom-block">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="leaderboard" id="tab-leaderboard-btn">Leaderboard</button>
+                <button class="tab-btn" data-tab="analytics" id="tab-analytics-btn">Analytics</button>
+            </div>
             <div class="team-box">
-                <p>Follow Twitter Dev - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
-                            </div>
+                <p id="follow-dev-text">Follow Developer - <a href="https://x.com/kaye_moni" target="_blank" id="follow-dev-link" style="color: white; text-decoration: underline;">@kaye_moni</a></p>
+            </div>
         </div>
-
-        <!-- Tabs (перемещены под .team-box) -->
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
-            <button class="tab-btn" data-tab="analytics">Analytics</button>
-        </div>
+        <!-- ... остальной код ... -->
 
         <!-- wrapper for leaderboard content so we can toggle visibility -->
         <div id="leaderboard-wrapper" class="tab-content active">
@@ -72,20 +142,22 @@
                 <div class="stat-box" id="total-views">Total Views: 0</div>
             </div>
 
-            <!-- 🔍 Поиск -->
-            <div class="search-box">
-                <input type="text" id="search" placeholder="Search user...">
-            </div>
-
-            <!-- Фильтр по времени -->
-            <div class="time-filter">
-                <label for="time-select">Filter by time:</label>
-                <select id="time-select">
-                    <option value="7">Last 7 days</option>
-                    <option value="14">Last 14 days</option>
-                    <option value="30">Last 30 days</option>
-                    <option value="all" selected>All time</option>
-                </select>
+            <!-- === SEARCH AND TIME FILTER IN ONE LINE === -->
+            <div class="search-time-filter-container">
+                <div class="search-section">
+                    <label for="search" class="search-label" id="search-label">SEARCH USER</label>
+                    <input type="text" id="search" placeholder="Type @handle or part of name..." class="search-input">
+                </div>
+                <div class="filter-section">
+                    <span class="filter-label" id="filter-label">FILTER BY TIME:</span>
+                    <select id="time-select" class="time-select">
+                        <option value="7" id="time-7">Last 7 days</option>
+                        <option value="14" id="time-14">Last 14 days</option>
+                        <option value="30" id="time-30">Last 30 days</option>
+                        <option value="all" id="time-all" selected>All time</option>
+                    </select>
+                    <!-- --- ИЗМЕНЕНИЕ: Кнопка Refresh удалена --- -->
+                </div>
             </div>
 
             <!-- Таблица лидеров -->
@@ -118,30 +190,59 @@
 
         <!-- Analytics tab content (hidden by default) -->
         <div id="tab-analytics" class="tab-content" style="display:none; text-align:left;">
-            <h2>Analytics</h2>
+            <h2 id="analytics-title">Analytics</h2>
 
             <!-- Time filter for analytics -->
             <div class="analytics-time-filter" style="display:flex; gap:10px; align-items:center; margin-bottom:18px; background: rgba(255,255,255,0.02); padding:12px; border-radius:12px;">
-                <label for="analytics-time-select" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by time:</label>
+                <label for="analytics-time-select" id="analytics-time-label" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by time:</label>
                 <select id="analytics-time-select" style="flex:1; max-width:180px;">
-                    <option value="all">All time</option>
-                    <option value="30">Last 30 days</option>
-                    <option value="14">Last 14 days</option>
-                    <option value="7">Last 7 days</option>
+                    <option value="all" id="analytics-time-all">All time</option>
+                    <option value="30" id="analytics-time-30">Last 30 days</option>
+                    <option value="14" id="analytics-time-14">Last 14 days</option>
+                    <option value="7" id="analytics-time-7">Last 7 days</option>
+                </select>
+                <!-- НОВЫЙ ФИЛЬТР ПО ЧАСАМ -->
+                <label for="hour-select" id="hour-label" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by hour:</label>
+                <select id="hour-select" style="flex:1; max-width:180px;">
+                    <option value="all" id="hour-all">All hours</option>
+                    <option value="0" id="hour-0">00:00</option>
+                    <option value="1" id="hour-1">01:00</option>
+                    <option value="2" id="hour-2">02:00</option>
+                    <option value="3" id="hour-3">03:00</option>
+                    <option value="4" id="hour-4">04:00</option>
+                    <option value="5" id="hour-5">05:00</option>
+                    <option value="6" id="hour-6">06:00</option>
+                    <option value="7" id="hour-7">07:00</option>
+                    <option value="8" id="hour-8">08:00</option>
+                    <option value="9" id="hour-9">09:00</option>
+                    <option value="10" id="hour-10">10:00</option>
+                    <option value="11" id="hour-11">11:00</option>
+                    <option value="12" id="hour-12">12:00</option>
+                    <option value="13" id="hour-13">13:00</option>
+                    <option value="14" id="hour-14">14:00</option>
+                    <option value="15" id="hour-15">15:00</option>
+                    <option value="16" id="hour-16">16:00</option>
+                    <option value="17" id="hour-17">17:00</option>
+                    <option value="18" id="hour-18">18:00</option>
+                    <option value="19" id="hour-19">19:00</option>
+                    <option value="20" id="hour-20">20:00</option>
+                    <option value="21" id="hour-21">21:00</option>
+                    <option value="22" id="hour-22">22:00</option>
+                    <option value="23" id="hour-23">23:00</option>
                 </select>
             </div>
 
             <!-- Nested tabs for analytics sections -->
             <div class="analytics-nested-tabs">
-                <button class="analytics-tab-btn active" data-analytics-tab="averages">Avg metrics</button>
-                <button class="analytics-tab-btn" data-analytics-tab="authors">Top 10 authors</button>
-                <button class="analytics-tab-btn" data-analytics-tab="posts">Top 10 posts</button>
+                <button class="analytics-tab-btn active" data-analytics-tab="averages" id="analytics-tab-averages">Avg metrics</button>
+                <button class="analytics-tab-btn" data-analytics-tab="authors" id="analytics-tab-authors">Top 10 authors</button>
+                <button class="analytics-tab-btn" data-analytics-tab="posts" id="analytics-tab-posts">Top 10 posts</button>
             </div>
 
             <!-- 1) Average metrics per user -->
             <section class="analytics-nested-content active" id="analytics-averages-section" data-analytics-section="averages">
                 <div class="analytics-block" id="analytics-averages">
-                    <h3>Average metrics per user</h3>
+                    <h3 id="analytics-averages-title">Average metrics per user</h3>
                     <div class="analytics-row" style="display:flex; gap:12px; flex-wrap:wrap;">
                         <div class="stat-box" id="avg-posts">Avg Posts: -</div>
                         <div class="stat-box" id="avg-likes">Avg Likes: -</div>
@@ -150,9 +251,9 @@
                     
                     <!-- Heatmap Section -->
                     <div class="analytics-block" style="margin-top: 16px;">
-                        <h3>Activity Heatmap (Tweets by Day & Hour)</h3>
+                        <h3 id="heatmap-title">Activity Heatmap (Tweets by Day & Hour)</h3>
                         <div id="heatmap-container" style="display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; margin-top: 12px;"></div>
-                        <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.85rem; color: #999;">
+                        <div id="heatmap-legend" style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.85rem; color: #999;">
                             <div>Sun</div> <div>Mon</div> <div>Tue</div> <div>Wed</div> <div>Thu</div> <div>Fri</div> <div>Sat</div>
                         </div>
                     </div>
@@ -164,8 +265,8 @@
                     
                     <!-- Export Buttons -->
                     <div style="margin-top: 16px; display: flex; gap: 10px;">
-                        <button id="export-csv" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;">Export CSV</button>
-                        <button id="export-json" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;">Export JSON</button>
+                        <button id="export-csv" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;" id="export-csv-btn">Export CSV</button>
+                        <button id="export-json" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;" id="export-json-btn">Export JSON</button>
                     </div>
                 </div>
             </section>
@@ -174,13 +275,13 @@
             <section class="analytics-nested-content" id="analytics-authors-section" data-analytics-section="authors">
                 <div class="analytics-block" id="analytics-top-authors-block">
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <h3 style="margin:0;">Top 10 authors</h3>
+                        <h3 id="top-authors-title" style="margin:0;">Top 10 authors</h3>
                         <div style="display:flex; gap:8px; align-items:center;">
-                            <label for="author-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
+                            <label for="author-metric-select" id="author-metric-label" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
                             <select id="author-metric-select">
-                                <option value="posts">Posts</option>
-                                <option value="likes">Likes</option>
-                                <option value="views">Views</option>
+                                <option value="posts" id="author-metric-posts">Posts</option>
+                                <option value="likes" id="author-metric-likes">Likes</option>
+                                <option value="views" id="author-metric-views">Views</option>
                             </select>
                         </div>
                     </div>
@@ -192,12 +293,12 @@
             <section class="analytics-nested-content" id="analytics-posts-section" data-analytics-section="posts">
                 <div class="analytics-block" id="analytics-top-posts-block">
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <h3 style="margin:0;">Top 10 posts</h3>
+                        <h3 id="top-posts-title" style="margin:0;">Top 10 posts</h3>
                         <div style="display:flex; gap:8px; align-items:center;">
-                            <label for="post-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
+                            <label for="post-metric-select" id="post-metric-label" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
                             <select id="post-metric-select">
-                                <option value="likes">Likes</option>
-                                <option value="views">Views</option>
+                                <option value="likes" id="post-metric-likes">Likes</option>
+                                <option value="views" id="post-metric-views">Views</option>
                             </select>
                         </div>
                     </div>
@@ -219,5 +320,7 @@
   <!-- Chart.js CDN for analytics charts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
+
+ 
 </body>
 </html>
